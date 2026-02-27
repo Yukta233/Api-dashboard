@@ -1,16 +1,68 @@
-# React + Vite
+# React API Multi-Page Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This is a **React + Vite project** that integrates multiple APIs into a single multi-page website.  
+The project demonstrates fetching and displaying data from **Weather API**, **News API**, **Products API**, and **Cocktail API**.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Each page uses **inline CSS** and is structured for easy deployment.  
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🌐 Pages
 
-## Expanding the ESLint configuration
+1. **Home Page (`/`)**
+   - Landing page with welcome message.
+   - Navbar links to all pages.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. **Weather Page (`/weather`)**
+   - Fetches weather data using [OpenWeatherMap API](https://openweathermap.org/api).
+   - Users can search for **any city or country**.
+   - Displays temperature, humidity, weather description, and icon.
+
+3. **News Page (`/news`)**
+   - Fetches top headlines from [NewsAPI](https://newsapi.org/).
+   - Users can select **10 supported countries** from a dropdown.
+   - Displays articles with title, description, image, and link.
+
+4. **Products Page (`/products`)**
+   - Fetches product data from [Fake Store API](https://fakestoreapi.com/).
+   - Displays products with title, image, price, and description.
+
+5. **Cocktails Page (`/cocktail`)**
+   - Fetches cocktail recipes from [TheCocktailDB API](https://www.thecocktaildb.com/api.php).
+   - Users can search **by cocktail name**.
+   - Displays drink name, image, and instructions.
+
+---
+
+## 🚀 Features
+
+- Multi-page React application using **React Router v6**.
+- **Inline CSS only** → no external CSS files needed.
+- Responsive layout, works on desktop and mobile.
+- Environment variables used for **Weather** and **News** API keys.
+- Fully deployable without modification.
+
+---
+
+## ⚡ Setup & Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/your-username/react-api-multi.git
+cd react-api-multi
+
+2. Install dependencies
+npm install 
+
+3. create .env file 
+# Weather API Key
+VITE_WEATHER_KEY=YOUR_OPENWEATHERMAP_KEY
+
+# News API Key
+VITE_NEWS_KEY=YOUR_NEWSAPI_KEY
+
+4. start server
+npm run dev
