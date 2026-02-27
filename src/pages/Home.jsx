@@ -2,56 +2,89 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const css = `
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Jost:wght@300;400;500;600&display=swap');
 
   *, *::before, *::after { box-sizing: border-box; }
 
   body {
-    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    background: #080d1a;
     min-height: 100vh;
     margin: 0;
   }
 
-  /* Background decorative rings */
-  .home-bg-ring-1 {
+  /* ── Animated mesh gradient background ── */
+  .home-bg {
     position: fixed;
-    width: 720px;
-    height: 720px;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 10%,  rgba(30, 80, 180, 0.45) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 90% 20%,  rgba(100, 30, 200, 0.35) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 60% at 80% 85%,  rgba(20, 160, 140, 0.3)  0%, transparent 60%),
+      radial-gradient(ellipse 50% 50% at 20% 80%,  rgba(200, 60, 120, 0.25) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 50% 50%,  rgba(60, 120, 220, 0.15) 0%, transparent 60%);
+    background-color: #080d1a;
+  }
+
+  /* ── Floating blurred orbs ── */
+  .home-orb {
+    position: fixed;
     border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.06);
-    top: -300px;
-    right: -200px;
+    filter: blur(72px);
     pointer-events: none;
     z-index: 0;
   }
-
-  .home-bg-ring-2 {
-    position: fixed;
-    width: 480px;
-    height: 480px;
-    border-radius: 50%;
-    border: 1px solid rgba(255,255,255,0.04);
-    bottom: -180px;
-    left: -140px;
-    pointer-events: none;
-    z-index: 0;
+  .home-orb-1 {
+    width: 440px; height: 440px;
+    background: radial-gradient(circle, rgba(99,102,241,0.3) 0%, transparent 70%);
+    top: -130px; left: -110px;
+    animation: orbDrift 10s ease-in-out infinite alternate;
+  }
+  .home-orb-2 {
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(20,184,166,0.24) 0%, transparent 70%);
+    bottom: -90px; right: -70px;
+    animation: orbDrift 13s ease-in-out infinite alternate-reverse;
+  }
+  .home-orb-3 {
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(236,72,153,0.2) 0%, transparent 70%);
+    top: 40%; left: 65%;
+    animation: orbDrift 9s ease-in-out infinite alternate;
+    animation-delay: -4s;
   }
 
-  /* Corner frame accents */
+  @keyframes orbDrift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(20px, 28px) scale(1.07); }
+  }
+
+  /* ── Subtle grid texture ── */
+  .home-grid-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  /* ── Colored corner brackets ── */
   .home-corner {
     position: fixed;
-    width: 56px;
-    height: 56px;
+    width: 48px; height: 48px;
     pointer-events: none;
-    opacity: 0.15;
-    z-index: 1;
+    z-index: 2;
   }
-  .home-corner-tl { top: 22px; left: 22px; border-top: 1.5px solid rgba(255,255,255,0.3); border-left: 1.5px solid rgba(255,255,255,0.3); }
-  .home-corner-tr { top: 22px; right: 22px; border-top: 1.5px solid rgba(255,255,255,0.3); border-right: 1.5px solid rgba(255,255,255,0.3); }
-  .home-corner-bl { bottom: 22px; left: 22px; border-bottom: 1.5px solid rgba(255,255,255,0.3); border-left: 1.5px solid rgba(255,255,255,0.3); }
-  .home-corner-br { bottom: 22px; right: 22px; border-bottom: 1.5px solid rgba(255,255,255,0.3); border-right: 1.5px solid rgba(255,255,255,0.3); }
+  .home-corner-tl { top: 20px; left: 20px;   border-top: 1.5px solid rgba(99,102,241,0.6);  border-left: 1.5px solid rgba(99,102,241,0.6); }
+  .home-corner-tr { top: 20px; right: 20px;  border-top: 1.5px solid rgba(20,184,166,0.6);  border-right: 1.5px solid rgba(20,184,166,0.6); }
+  .home-corner-bl { bottom: 20px; left: 20px; border-bottom: 1.5px solid rgba(236,72,153,0.6); border-left: 1.5px solid rgba(236,72,153,0.6); }
+  .home-corner-br { bottom: 20px; right: 20px; border-bottom: 1.5px solid rgba(245,158,11,0.6); border-right: 1.5px solid rgba(245,158,11,0.6); }
 
-  /* Outer wrapper */
+  /* ── Main layout ── */
   .home-root-wrap {
     min-height: 100vh;
     display: flex;
@@ -60,108 +93,193 @@ const css = `
     position: relative;
     z-index: 1;
     font-family: 'Jost', sans-serif;
+    padding: 48px 24px;
+  }
+
+  .home-center {
+    text-align: center;
+    width: 100%;
+    max-width: 680px;
     animation: hFadeUp 0.7s ease both;
   }
 
   @keyframes hFadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(22px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Nav overrides */
+  /* ── Pill badge ── */
+  .home-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(99,102,241,0.12);
+    border: 1px solid rgba(99,102,241,0.3);
+    border-radius: 100px;
+    padding: 6px 18px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #a5b4fc;
+    margin-bottom: 28px;
+    animation: hFadeUp 0.5s 0.05s ease both;
+  }
+
+  .home-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #818cf8;
+    animation: badgePulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes badgePulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(129,140,248,0.6); }
+    50%       { opacity: 0.6; box-shadow: 0 0 0 5px rgba(129,140,248,0); }
+  }
+
+  /* ── Gradient heading ── */
+  .home-title-enhanced {
+    font-family: 'Playfair Display', serif !important;
+    font-size: clamp(38px, 8vw, 80px) !important;
+    font-weight: 900 !important;
+    line-height: 1.04 !important;
+    margin: 0 !important;
+    letter-spacing: -0.01em !important;
+    animation: hFadeUp 0.6s 0.15s ease both;
+    background: linear-gradient(135deg, #fff 20%, #c7d2fe 55%, #5eead4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Fancy divider ── */
+  .home-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 26px auto 24px;
+    animation: hFadeUp 0.5s 0.25s ease both;
+  }
+  .home-div-line {
+    width: 64px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(165,180,252,0.4));
+  }
+  .home-div-line.r {
+    background: linear-gradient(90deg, rgba(165,180,252,0.4), transparent);
+  }
+  .home-div-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: rgba(165,180,252,0.5);
+  }
+  .home-div-dot.lg {
+    width: 7px; height: 7px;
+    background: rgba(165,180,252,0.7);
+  }
+
+  /* ── Description ── */
+  .home-desc-enhanced {
+    font-family: 'Jost', sans-serif !important;
+    font-size: 15.5px !important;
+    font-weight: 300 !important;
+    color: rgba(255,255,255,0.45) !important;
+    line-height: 1.85 !important;
+    letter-spacing: 0.01em !important;
+    max-width: 460px !important;
+    margin: 0 auto 48px !important;
+    animation: hFadeUp 0.6s 0.3s ease both;
+  }
+
+  /* ── Nav grid ── */
   .home-nav-enhanced {
-    display: flex !important;
-    justify-content: center !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
     gap: 12px !important;
-    margin-bottom: 64px !important;
-    flex-wrap: wrap;
+    max-width: 520px !important;
+    margin: 0 auto !important;
+    flex-wrap: unset !important;
+    margin-bottom: 0 !important;
   }
 
   .home-nav-enhanced a {
     font-family: 'Jost', sans-serif !important;
     text-decoration: none !important;
     color: #fff !important;
-    background: transparent !important;
-    border: 1.5px solid rgba(255,255,255,0.4) !important;
-    padding: 10px 26px !important;
-    border-radius: 0 !important;
-    font-size: 11px !important;
+    background: rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    padding: 20px 16px !important;
+    border-radius: 16px !important;
+    font-size: 12px !important;
     font-weight: 500 !important;
-    letter-spacing: 0.18em !important;
+    letter-spacing: 0.12em !important;
     text-transform: uppercase !important;
     position: relative !important;
     overflow: hidden !important;
-    transition: color 0.28s ease, border-color 0.28s ease !important;
-    display: inline-block !important;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, box-shadow 0.22s ease !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    backdrop-filter: blur(10px) !important;
+  }
+
+  /* Card emoji icons via data attrs — injected via CSS content on ::before */
+  .home-nav-enhanced a:nth-child(1) { animation: hFadeUp 0.5s 0.38s ease both; --ac: rgba(96,165,250,0.25); --bc: rgba(96,165,250,0.5); }
+  .home-nav-enhanced a:nth-child(2) { animation: hFadeUp 0.5s 0.45s ease both; --ac: rgba(251,191,36,0.2);  --bc: rgba(251,191,36,0.5); }
+  .home-nav-enhanced a:nth-child(3) { animation: hFadeUp 0.5s 0.52s ease both; --ac: rgba(52,211,153,0.2);  --bc: rgba(52,211,153,0.5); }
+  .home-nav-enhanced a:nth-child(4) { animation: hFadeUp 0.5s 0.59s ease both; --ac: rgba(236,72,153,0.2);  --bc: rgba(236,72,153,0.5); }
+
+  .home-nav-enhanced a:nth-child(1) .nav-icon::before { content: '🌤'; }
+  .home-nav-enhanced a:nth-child(2) .nav-icon::before { content: '📰'; }
+  .home-nav-enhanced a:nth-child(3) .nav-icon::before { content: '🛍'; }
+  .home-nav-enhanced a:nth-child(4) .nav-icon::before { content: '🍹'; }
+
+  .nav-icon {
+    font-size: 26px;
+    line-height: 1;
+    position: relative;
+    z-index: 1;
   }
 
   .home-nav-enhanced a::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(255,255,255,0.15);
-    transform: translateY(101%);
-    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--ac, rgba(255,255,255,0.06));
+    opacity: 0;
+    transition: opacity 0.22s ease;
+    border-radius: inherit;
     z-index: 0;
   }
 
   .home-nav-enhanced a:hover {
-    color: #fff !important;
-    border-color: rgba(255,255,255,0.7) !important;
+    transform: translateY(-4px) scale(1.01) !important;
+    border-color: var(--bc, rgba(255,255,255,0.25)) !important;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.35) !important;
   }
 
-  .home-nav-enhanced a:hover::before {
-    transform: translateY(0);
-  }
+  .home-nav-enhanced a:hover::before { opacity: 1; }
 
   .home-nav-enhanced a span {
-    position: relative;
-    z-index: 1;
+    position: relative !important;
+    z-index: 1 !important;
   }
 
-  /* Stagger nav items */
-  .home-nav-enhanced a:nth-child(1) { animation: hFadeUp 0.5s 0.1s ease both; }
-  .home-nav-enhanced a:nth-child(2) { animation: hFadeUp 0.5s 0.17s ease both; }
-  .home-nav-enhanced a:nth-child(3) { animation: hFadeUp 0.5s 0.24s ease both; }
-  .home-nav-enhanced a:nth-child(4) { animation: hFadeUp 0.5s 0.31s ease both; }
-
-  .home-title-enhanced {
-    font-family: 'Playfair Display', serif !important;
-    font-size: clamp(34px, 7vw, 70px) !important;
-    font-weight: 900 !important;
-    color: #ffffff !important;
-    line-height: 1.06 !important;
-    margin-bottom: 24px !important;
-    animation: hFadeUp 0.6s 0.3s ease both;
+  /* ── Footer tagline ── */
+  .home-tagline {
+    margin-top: 44px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.18);
+    animation: hFadeUp 0.5s 0.7s ease both;
   }
 
-  /* Thin rule divider inserted via pseudo */
-  .home-title-enhanced::after {
-    content: '';
-    display: block;
-    width: 44px;
-    height: 2px;
-    background: rgba(255,255,255,0.4);
-    margin: 24px auto 0;
-    animation: hExpandW 0.5s 0.5s ease both;
-  }
-
-  @keyframes hExpandW {
-    from { width: 0; opacity: 0; }
-    to   { width: 44px; opacity: 1; }
-  }
-
-  /* Description overrides */
-  .home-desc-enhanced {
-    font-family: 'Jost', sans-serif !important;
-    font-size: 16px !important;
-    font-weight: 300 !important;
-    color: rgba(255,255,255,0.55) !important;
-    line-height: 1.85 !important;
-    letter-spacing: 0.01em !important;
-    max-width: 520px !important;
-    margin: 28px auto 0 !important;
-    animation: hFadeUp 0.6s 0.5s ease both;
+  @media (max-width: 480px) {
+    .home-nav-enhanced { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
   }
 `;
 
@@ -176,35 +294,67 @@ function Home() {
     <>
       <style>{css}</style>
 
-      {/* Decorative background rings */}
-      <div className="home-bg-ring-1" />
-      <div className="home-bg-ring-2" />
+      {/* Background layers */}
+      <div className="home-bg" />
+      <div className="home-grid-overlay" />
+      <div className="home-orb home-orb-1" />
+      <div className="home-orb home-orb-2" />
+      <div className="home-orb home-orb-3" />
 
-      {/* Corner frame accents */}
+      {/* Colored corner brackets */}
       <div className="home-corner home-corner-tl" />
       <div className="home-corner home-corner-tr" />
       <div className="home-corner home-corner-bl" />
       <div className="home-corner home-corner-br" />
 
       <div className="home-root-wrap">
-        <div style={containerStyle}>
+        <div className="home-center" style={containerStyle}>
 
-          {/* Navbar on top */}
-          <nav className="home-nav-enhanced" style={navStyle}>
-            <Link to="/weather" style={linkStyle}><span>Weather</span></Link>
-            <Link to="/news"    style={linkStyle}><span>News</span></Link>
-            <Link to="/products" style={linkStyle}><span>Products</span></Link>
-            <Link to="/cocktail" style={linkStyle}><span>Cocktails</span></Link>
-          </nav>
+          {/* Animated pill badge */}
+          <div className="home-badge">
+            <span className="home-badge-dot" />
+            API Dashboard · Live Data
+          </div>
 
           {/* Homepage Content */}
           <h1 className="home-title-enhanced" style={titleStyle}>
             Welcome to My API Dashboard
           </h1>
 
+          {/* Decorative divider */}
+          <div className="home-divider">
+            <div className="home-div-line" />
+            <div className="home-div-dot" />
+            <div className="home-div-dot lg" />
+            <div className="home-div-dot" />
+            <div className="home-div-line r" />
+          </div>
+
           <p className="home-desc-enhanced" style={descStyle}>
             Explore live Weather updates, News headlines, Product listings, and Cocktail recipes. Click on any of the buttons above to visit the respective page.
           </p>
+
+          {/* Navbar on top */}
+          <nav className="home-nav-enhanced" style={navStyle}>
+            <Link to="/weather" style={linkStyle}>
+              <span className="nav-icon" />
+              <span>Weather</span>
+            </Link>
+            <Link to="/news" style={linkStyle}>
+              <span className="nav-icon" />
+              <span>News</span>
+            </Link>
+            <Link to="/products" style={linkStyle}>
+              <span className="nav-icon" />
+              <span>Products</span>
+            </Link>
+            <Link to="/cocktail" style={linkStyle}>
+              <span className="nav-icon" />
+              <span>Cocktails</span>
+            </Link>
+          </nav>
+
+          <div className="home-tagline">Powered by open APIs · Built with React</div>
 
         </div>
       </div>
